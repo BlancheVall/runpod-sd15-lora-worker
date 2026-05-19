@@ -161,7 +161,7 @@ def handler(job):
     started_at = time.time()
     input_data = job.get("input", {}) or {}
 
-    if input_data.get("health_check"):
+    if input_data.get("health_check") or not input_data:
         return {
             "ok": True,
             "message": "Worker is reachable. Model loading is tested when a real generation request runs.",
