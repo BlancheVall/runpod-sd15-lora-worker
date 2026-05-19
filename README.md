@@ -16,12 +16,13 @@ This repo is a RunPod Serverless worker for Stable Diffusion 1.5 plus one pixel-
 ```json
 {
   "input": {
-    "prompt": "pixel, pink long-haired female mage, RPG pixel sprite",
-    "negative_prompt": "low quality, blurry, background, shadow, text, watermark",
+    "prompt": "(masterpiece, top quality, best quality), pixel, pixel art, 1girl, full body, pink long-haired female mage, RPG pixel sprite",
+    "negative_prompt": "(worst quality, low quality:2), blurry, bad anatomy, text, watermark",
     "width": 512,
     "height": 768,
-    "num_inference_steps": 28,
+    "num_inference_steps": 30,
     "guidance_scale": 7,
+    "clip_skip": 2,
     "lora_weight": 0.5,
     "seed": -1,
     "remove_background": false
@@ -70,8 +71,9 @@ LORA_PATH=/workspace/loras/pixel_f2.safetensors
 LORA_WEIGHT=0.5
 WIDTH=512
 HEIGHT=768
-STEPS=28
+STEPS=30
 GUIDANCE_SCALE=7
+CLIP_SKIP=2
 SCHEDULER=dpm
 REMOVE_BACKGROUND=false
 ```

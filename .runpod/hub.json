@@ -17,8 +17,9 @@
             "LORA_WEIGHT": "0.5",
             "WIDTH": "512",
             "HEIGHT": "768",
-            "STEPS": "28",
+            "STEPS": "30",
             "GUIDANCE_SCALE": "7",
+            "CLIP_SKIP": "2",
             "SCHEDULER": "dpm",
             "REMOVE_BACKGROUND": "false"
           }

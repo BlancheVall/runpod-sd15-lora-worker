@@ -246,6 +246,7 @@ def handler(job):
     steps = int(input_data.get("num_inference_steps", input_data.get("steps", os.getenv("STEPS", "28"))))
     guidance_scale = float(input_data.get("guidance_scale", os.getenv("GUIDANCE_SCALE", "7")))
     negative_prompt = str(input_data.get("negative_prompt", os.getenv("NEGATIVE_PROMPT", DEFAULT_NEGATIVE_PROMPT)))
+    clip_skip = int(input_data.get("clip_skip", os.getenv("CLIP_SKIP", "2")))
 
     with torch.inference_mode():
         result = pipe(
@@ -256,6 +257,7 @@ def handler(job):
             num_inference_steps=steps,
             guidance_scale=guidance_scale,
             generator=generator,
+            clip_skip=clip_skip,
             cross_attention_kwargs={"scale": lora_weight},
         )
 

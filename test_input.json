@@ -1,11 +1,12 @@
 {
   "input": {
-    "prompt": "pixel, Create one full-body RPG pixel character sprite, centered, transparent background, pink long-haired female mage, staff, cute pixel art, thick black outline, chunky pixels, limited color palette",
-    "negative_prompt": "low quality, blurry, anti-aliased, smooth shading, realistic, 3d render, background, shadow, glow, text, watermark, multiple characters, sprite sheet",
+    "prompt": "(masterpiece, top quality, best quality), pixel, pixel art, 1girl, full body, pink long-haired female mage, staff, game sprite, centered, chunky pixels, limited color palette",
+    "negative_prompt": "(worst quality, low quality:2), blurry, bad anatomy, deformed, extra limbs, duplicate, multiple characters, text, watermark, logo, ui, frame, cropped, out of frame, realistic, 3d render, smooth shading",
     "width": 512,
     "height": 768,
-    "num_inference_steps": 28,
+    "num_inference_steps": 30,
     "guidance_scale": 7,
+    "clip_skip": 2,
     "lora_weight": 0.5,
     "seed": -1,
     "remove_background": false
