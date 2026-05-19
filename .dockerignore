@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.git/
+.env
+models/
+loras/
+*.ckpt
+*.safetensors
+*.pt
+*.bin
