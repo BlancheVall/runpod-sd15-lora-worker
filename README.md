@@ -55,8 +55,8 @@ Do not commit SD1.5 or LoRA files into git. They are too large.
 For local testing on your PC, set:
 
 ```powershell
-$env:SD_MODEL_PATH="D:\Download\v1-5"
-$env:LORA_PATH="D:\Download\pixel_f2"
+$env:SD_MODEL_PATH="D:\Download\v1-5\sd1-5.ckpt"
+$env:LORA_PATH="D:\Download\pixel_f2\pixel_f2.safetensors"
 $env:LORA_WEIGHT="0.8"
 ```
 
@@ -65,8 +65,8 @@ I could not find these two folders from the current shell, so check whether your
 For RunPod production, put the model files on a Network Volume or bake them into a private image, then set:
 
 ```env
-SD_MODEL_PATH=/runpod-volume/models/v1-5
-LORA_PATH=/runpod-volume/loras/pixel_f2
+SD_MODEL_PATH=/workspace/models/v1-5/sd1-5.ckpt
+LORA_PATH=/workspace/loras/pixel_f2.safetensors
 LORA_WEIGHT=0.8
 WIDTH=512
 HEIGHT=512
@@ -103,8 +103,8 @@ REMOVE_BACKGROUND=false
 ```powershell
 docker build -t sd15-lora-worker .
 docker run --gpus all --rm `
-  -e SD_MODEL_PATH=/models/v1-5 `
-  -e LORA_PATH=/loras/pixel_f2 `
+  -e SD_MODEL_PATH=/models/v1-5/sd1-5.ckpt `
+  -e LORA_PATH=/loras/pixel_f2.safetensors `
   -v D:\Download\v1-5:/models/v1-5 `
   -v D:\Download\pixel_f2:/loras/pixel_f2 `
   sd15-lora-worker

@@ -12,8 +12,8 @@
         "name": "SD1.5 LoRA Pixel Sprite",
         "defaults": {
           "env": {
-            "SD_MODEL_PATH": "/workspace/models/v1-5",
-            "LORA_PATH": "/workspace/loras/pixel_f2",
+            "SD_MODEL_PATH": "/workspace/models/v1-5/sd1-5.ckpt",
+            "LORA_PATH": "/workspace/loras/pixel_f2.safetensors",
             "LORA_WEIGHT": "0.8",
             "WIDTH": "512",
             "HEIGHT": "512",
