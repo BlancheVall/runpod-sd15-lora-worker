@@ -41,6 +41,31 @@ def find_first_model_file(path: Path) -> Path | None:
     return None
 
 
+def resolve_existing_file(configured_path: Path, fallback_dir: Path, fallback_names: tuple[str, ...]) -> Path:
+    if configured_path.exists():
+        return configured_path
+
+    for name in fallback_names:
+        candidate = fallback_dir / name
+
+        if candidate.exists():
+            return candidate
+
+    discovered_file = find_first_model_file(fallback_dir)
+
+    if discovered_file:
+        return discovered_file
+
+    return configured_path
+
+
+def list_directory(path: Path) -> list[str]:
+    if not path.exists() or not path.is_dir():
+        return []
+
+    return sorted(item.name for item in path.iterdir())
+
+
 def load_pipeline():
     global PIPELINE
 
@@ -54,8 +79,16 @@ def load_pipeline():
         import torch
         from diffusers import DPMSolverMultistepScheduler, EulerAncestralDiscreteScheduler, StableDiffusionPipeline
 
-        model_path = Path(os.getenv("SD_MODEL_PATH", "/runpod-volume/models/v1-5"))
-        lora_path = Path(os.getenv("LORA_PATH", "/runpod-volume/loras/pixel_f2"))
+        model_path = resolve_existing_file(
+            Path(os.getenv("SD_MODEL_PATH", "/runpod-volume/models/v1-5/sd1-5.safetensors")),
+            Path("/runpod-volume/models/v1-5"),
+            ("sd1-5.safetensors", "sd1-5.ckpt", "model.safetensors", "model.ckpt"),
+        )
+        lora_path = resolve_existing_file(
+            Path(os.getenv("LORA_PATH", "/runpod-volume/loras/pixel_f2.safetensors")),
+            Path("/runpod-volume/loras"),
+            ("pixel_f2.safetensors", "pixel_f2.ckpt"),
+        )
         dtype = torch.float16 if torch.cuda.is_available() else torch.float32
 
         if not model_path.exists():
@@ -168,17 +201,31 @@ def handler(job):
         }
 
     if input_data.get("check_paths"):
-        model_path = Path(os.getenv("SD_MODEL_PATH", "/runpod-volume/models/v1-5/sd1-5.ckpt"))
-        lora_path = Path(os.getenv("LORA_PATH", "/runpod-volume/loras/pixel_f2.safetensors"))
+        configured_model_path = Path(os.getenv("SD_MODEL_PATH", "/runpod-volume/models/v1-5/sd1-5.safetensors"))
+        configured_lora_path = Path(os.getenv("LORA_PATH", "/runpod-volume/loras/pixel_f2.safetensors"))
+        model_path = resolve_existing_file(
+            configured_model_path,
+            Path("/runpod-volume/models/v1-5"),
+            ("sd1-5.safetensors", "sd1-5.ckpt", "model.safetensors", "model.ckpt"),
+        )
+        lora_path = resolve_existing_file(
+            configured_lora_path,
+            Path("/runpod-volume/loras"),
+            ("pixel_f2.safetensors", "pixel_f2.ckpt"),
+        )
 
         return {
+            "configured_sd_model_path": str(configured_model_path),
             "sd_model_path": str(model_path),
             "sd_model_exists": model_path.exists(),
             "sd_model_size_bytes": model_path.stat().st_size if model_path.exists() else None,
+            "configured_lora_path": str(configured_lora_path),
             "lora_path": str(lora_path),
             "lora_exists": lora_path.exists(),
             "lora_size_bytes": lora_path.stat().st_size if lora_path.exists() else None,
             "runpod_volume_root_exists": Path("/runpod-volume").exists(),
+            "model_dir_files": list_directory(Path("/runpod-volume/models/v1-5")),
+            "lora_dir_files": list_directory(Path("/runpod-volume/loras")),
             "workspace_root_exists": Path("/workspace").exists(),
         }
 
