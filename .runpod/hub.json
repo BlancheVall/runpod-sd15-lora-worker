@@ -1,0 +1,29 @@
+{
+  "title": "RunPod SD1.5 LoRA Worker",
+  "description": "Serverless Stable Diffusion 1.5 image generation with a custom LoRA. Accepts a prompt and returns a PNG image as base64.",
+  "type": "serverless",
+  "category": "image",
+  "iconUrl": "https://raw.githubusercontent.com/runpod/docs/main/static/img/logo.png",
+  "config": {
+    "runsOn": "GPU",
+    "containerDiskInGb": 20,
+    "presets": [
+      {
+        "name": "SD1.5 LoRA Pixel Sprite",
+        "defaults": {
+          "env": {
+            "SD_MODEL_PATH": "/workspace/models/v1-5",
+            "LORA_PATH": "/workspace/loras/pixel_f2",
+            "LORA_WEIGHT": "0.8",
+            "WIDTH": "512",
+            "HEIGHT": "512",
+            "STEPS": "28",
+            "GUIDANCE_SCALE": "7",
+            "SCHEDULER": "dpm",
+            "REMOVE_BACKGROUND": "false"
+          }
+        }
+      }
+    ]
+  }
+}

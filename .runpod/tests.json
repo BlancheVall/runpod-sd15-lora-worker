@@ -1,0 +1,19 @@
+{
+  "tests": [
+    {
+      "name": "pixel sprite generation",
+      "input": {
+        "prompt": "pixel_f2, pink long-haired female mage, RPG pixel sprite, full body, centered, thick black outline, chunky pixels",
+        "negative_prompt": "low quality, blurry, anti-aliased, smooth shading, realistic, 3d render, background, shadow, glow, text, watermark, multiple characters, sprite sheet",
+        "width": 512,
+        "height": 512,
+        "num_inference_steps": 20,
+        "guidance_scale": 7,
+        "lora_weight": 0.8,
+        "seed": 12345,
+        "remove_background": false
+      },
+      "timeout": 180000
+    }
+  ]
+}
