@@ -7,8 +7,6 @@ from pathlib import Path
 from threading import Lock
 
 import runpod
-import torch
-from diffusers import DPMSolverMultistepScheduler, EulerAncestralDiscreteScheduler, StableDiffusionPipeline
 from PIL import Image
 
 
@@ -52,6 +50,9 @@ def load_pipeline():
     with PIPELINE_LOCK:
         if PIPELINE is not None:
             return PIPELINE
+
+        import torch
+        from diffusers import DPMSolverMultistepScheduler, EulerAncestralDiscreteScheduler, StableDiffusionPipeline
 
         model_path = Path(os.getenv("SD_MODEL_PATH", "/runpod-volume/models/v1-5"))
         lora_path = Path(os.getenv("LORA_PATH", "/runpod-volume/loras/pixel_f2"))
@@ -172,6 +173,8 @@ def handler(job):
         return {"error": "prompt is required"}
 
     pipe = load_pipeline()
+    import torch
+
     seed = get_seed(input_data)
     generator = torch.Generator(device=pipe.device).manual_seed(seed)
     lora_weight = float(input_data.get("lora_weight", os.getenv("LORA_WEIGHT", "0.8")))
