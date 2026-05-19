@@ -167,6 +167,21 @@ def handler(job):
             "message": "Worker is reachable. Model loading is tested when a real generation request runs.",
         }
 
+    if input_data.get("check_paths"):
+        model_path = Path(os.getenv("SD_MODEL_PATH", "/runpod-volume/models/v1-5/sd1-5.ckpt"))
+        lora_path = Path(os.getenv("LORA_PATH", "/runpod-volume/loras/pixel_f2.safetensors"))
+
+        return {
+            "sd_model_path": str(model_path),
+            "sd_model_exists": model_path.exists(),
+            "sd_model_size_bytes": model_path.stat().st_size if model_path.exists() else None,
+            "lora_path": str(lora_path),
+            "lora_exists": lora_path.exists(),
+            "lora_size_bytes": lora_path.stat().st_size if lora_path.exists() else None,
+            "runpod_volume_root_exists": Path("/runpod-volume").exists(),
+            "workspace_root_exists": Path("/workspace").exists(),
+        }
+
     prompt = str(input_data.get("prompt", "")).strip()
 
     if not prompt:
