@@ -1,5 +1,7 @@
 # RunPod SD1.5 + LoRA Serverless Worker
 
+[![Runpod](https://api.runpod.io/badge/BlancheVall/runpod-sd15-lora-worker)](https://console.runpod.io/hub/BlancheVall/runpod-sd15-lora-worker)
+
 This repo is a RunPod Serverless worker for Stable Diffusion 1.5 plus one pixel-art LoRA. It accepts a prompt and returns a PNG image as base64.
 
 ## Files
