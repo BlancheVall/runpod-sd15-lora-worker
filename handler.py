@@ -159,6 +159,13 @@ def get_seed(input_data: dict) -> int:
 def handler(job):
     started_at = time.time()
     input_data = job.get("input", {}) or {}
+
+    if input_data.get("health_check"):
+        return {
+            "ok": True,
+            "message": "Worker is reachable. Model loading is tested when a real generation request runs.",
+        }
+
     prompt = str(input_data.get("prompt", "")).strip()
 
     if not prompt:
