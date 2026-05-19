@@ -16,13 +16,13 @@ This repo is a RunPod Serverless worker for Stable Diffusion 1.5 plus one pixel-
 ```json
 {
   "input": {
-    "prompt": "pixel_f2, pink long-haired female mage, RPG pixel sprite",
+    "prompt": "pixel, pink long-haired female mage, RPG pixel sprite",
     "negative_prompt": "low quality, blurry, background, shadow, text, watermark",
     "width": 512,
-    "height": 512,
+    "height": 768,
     "num_inference_steps": 28,
     "guidance_scale": 7,
-    "lora_weight": 0.8,
+    "lora_weight": 0.5,
     "seed": -1,
     "remove_background": false
   }
@@ -38,7 +38,7 @@ This repo is a RunPod Serverless worker for Stable Diffusion 1.5 plus one pixel-
       "image": "base64_png_here",
       "seed": 123,
       "width": 512,
-      "height": 512
+      "height": 768
     }
   ],
   "seed": 123,
@@ -57,7 +57,7 @@ For local testing on your PC, set:
 ```powershell
 $env:SD_MODEL_PATH="D:\Download\v1-5\sd1-5.ckpt"
 $env:LORA_PATH="D:\Download\pixel_f2\pixel_f2.safetensors"
-$env:LORA_WEIGHT="0.8"
+$env:LORA_WEIGHT="0.5"
 ```
 
 I could not find these two folders from the current shell, so check whether your actual paths are `D:\Downloads\...` or another drive.
@@ -67,9 +67,9 @@ For RunPod production, put the model files on a Network Volume or bake them into
 ```env
 SD_MODEL_PATH=/workspace/models/v1-5/sd1-5.ckpt
 LORA_PATH=/workspace/loras/pixel_f2.safetensors
-LORA_WEIGHT=0.8
+LORA_WEIGHT=0.5
 WIDTH=512
-HEIGHT=512
+HEIGHT=768
 STEPS=28
 GUIDANCE_SCALE=7
 SCHEDULER=dpm
